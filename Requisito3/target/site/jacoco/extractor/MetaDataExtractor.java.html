@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MetaDataExtractor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MetaDataExtractor</a> &gt; <a href="index.source.html" class="el_package">extractor</a> &gt; <span class="el_source">MetaDataExtractor.java</span></div><h1>MetaDataExtractor.java</h1><pre class="source lang-java linenums">package extractor;
+
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
+
+import org.apache.commons.io.FileUtils;
+
+import pl.edu.icm.cermine.ContentExtractor;
+import pl.edu.icm.cermine.exception.AnalysisException;
+import pl.edu.icm.cermine.metadata.model.DateType;
+import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
+import pl.edu.icm.cermine.tools.timeout.TimeoutException;
+
+<span class="fc" id="L19">public class MetaDataExtractor {</span>
+
+	
+	public String[] listFiles (String repPath, String fileExtension) {
+<span class="fc" id="L23">		File dir = new File(repPath);</span>
+<span class="fc" id="L24">		String [] files = dir.list(new FilenameFilter() {</span>
+			@Override
+			public boolean accept(File dir, String name) {
+<span class="fc" id="L27">				return name.endsWith(fileExtension);</span>
+			}
+		});
+<span class="fc" id="L30">		return files;</span>
+	}
+	
+	
+	
+	public DocumentMetadata extractMetaData (String repPath, String file) {
+		ContentExtractor extractor;
+<span class="fc" id="L37">		DocumentMetadata data = null;</span>
+		InputStream input;
+		try {
+<span class="fc" id="L40">			input = new FileInputStream(repPath + file);</span>
+<span class="fc" id="L41">			extractor = new ContentExtractor();</span>
+<span class="fc" id="L42">			extractor.setPDF(input);</span>
+<span class="fc" id="L43">			data = extractor.getMetadata();</span>
+<span class="fc" id="L44">		} catch (IOException | TimeoutException | AnalysisException e) {</span>
+<span class="fc" id="L45">			System.err.println(&quot;error analysing or accessing file&quot;);</span>
+<span class="fc" id="L46">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L48">		return data;</span>
+	}
+	
+	
+	
+	public String buildTableContent (String repPath, String[] files) {
+<span class="fc" id="L54">		StringBuilder strb = new StringBuilder();</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">		for (String file: files) {</span>
+<span class="fc" id="L56">			DocumentMetadata data = extractMetaData(repPath, file);</span>
+<span class="fc" id="L57">			strb.append(&quot;&lt;tr&gt;&lt;td&gt;&lt;a href=\&quot;&quot; + repPath + file + &quot;\&quot; target=\&quot;_blank\&quot;&gt;&quot;)</span>
+<span class="fc" id="L58">			.append(data.getTitle().toString())</span>
+<span class="fc" id="L59">			.append(&quot;&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&quot;)</span>
+<span class="fc" id="L60">			.append(data.getJournal().toString())</span>
+<span class="fc" id="L61">			.append(&quot;&lt;/td&gt;&lt;td&gt;&quot;)</span>
+<span class="fc" id="L62">			.append(data.getDate(DateType.PUBLISHED).getYear().toString())</span>
+<span class="fc" id="L63">			.append(&quot;&lt;/td&gt;&lt;/tr&gt;&quot;);</span>
+		}
+<span class="fc" id="L65">		return strb.toString();</span>
+	}
+	
+	
+	
+	public void buildhtml (String htmlPath, String content) {
+<span class="fc" id="L71">		File htmlTemplateFile = new File(htmlPath + &quot;tableModel.html&quot;);</span>
+<span class="fc" id="L72">		File html = new File(htmlPath + &quot;table.html&quot;);</span>
+		try {
+<span class="fc" id="L74">			String htmlasString = FileUtils.readFileToString(htmlTemplateFile, Charset.forName(&quot;UTF-8&quot;));</span>
+<span class="fc" id="L75">			htmlasString = htmlasString.replace(&quot;$content&quot;, content);</span>
+<span class="fc" id="L76">			FileUtils.writeStringToFile(html, htmlasString, Charset.forName(&quot;UTF-8&quot;));</span>
+<span class="fc" id="L77">		} catch (IOException e) {</span>
+<span class="fc" id="L78">			System.err.println(&quot;error accessing file&quot;);</span>
+<span class="fc" id="L79">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L81">	}</span>
+	
+	
+	
+	public void metadataToHtml(String repPath,String htmlPath, String fileExtension) {
+<span class="fc" id="L86">		String[] files = listFiles(repPath, fileExtension);</span>
+<span class="fc" id="L87">		String content = buildTableContent(repPath, files);</span>
+<span class="fc" id="L88">		buildhtml(htmlPath, content);</span>
+<span class="fc" id="L89">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
