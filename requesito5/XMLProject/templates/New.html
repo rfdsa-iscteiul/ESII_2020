@@ -1,0 +1,172 @@
+<html>
+<head>
+<title>Rq6</title>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+<style type="text/css">
+.divtainer {
+	padding: 20px;
+	box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+	border: 1px solid #dee2e6 !important;
+	margin-bottom: 20px;
+}
+</style>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script>
+	$(document)
+			.ready(
+					function() {
+						var max_fields = 10;
+						var wrapper = $(".container1");
+						var add_button = $(".add_form_field");
+						var x = 1;
+						var queryEntry
+
+						$(add_button)
+								.click(
+										function(e) {
+											e.preventDefault();
+											if (x < max_fields) {
+												x++;
+												queryEntry = '<div tyle="margin: 0 auto">'
+														+ '<select id="operator'+x+'" style="margin: 2 auto;max-width: 200px" name="logicalOperator'+x+'">'
+														+ '<option value="and">and</option>'
+														+ '<option value="or">or</option>'
+														+
+														'</select>'
+														+ '<label>not</label>'
+														+ '<input type="checkbox" id="not'+x+'"  style="margin: 2 auto;max-width: 200px"name="not'+x+'" value="not">'
+														+
+
+
+														'</select>'
+														+ '<select id="mysubquery'+x+'" style="margin: 2 auto;max-width: 200px" name="mysubquery'+x+'">'
+														+ $subquery
+														'</select>'
+														+ '<select id="operator'+x+'" style="margin: 2 auto;max-width: 200px" name="operator'+x+'">'
+														+ '<option value="all">all</option>'
+														+ '<option value="dif">&#8800;</option>'
+														+ '<option value="eq">&#61;</option>'
+														+ '<option value="lt">&#60;</option>'
+														+ '<option value="gt">&#62;</option>'
+														+ '<option value="lte"> &#8804; </option>'
+														+ '<option value="gte">&#8925;</option>'
+														+'</select>'
+														+ '<input type="text" id="query'+x+'" name="query'+x+' style="margin: 2 auto;max-width: 200px" " value="">'
+														+ '<a href="#" class="btn btn-danger delete" style="margin: 2 auto;max-width: 200px">&#215;</a>'
+
+														+ '</div>'
+
+												$(wrapper).append(queryEntry); //add input box
+
+											} else {
+												alert('You Reached the limits')
+											}
+										});
+
+						$(wrapper).on("click", ".delete", function(e) {
+							e.preventDefault();
+							$(this).parent('div').remove();
+							x--;
+						})
+					});
+</script>
+</head>
+<body style="background-color: #e9ecef">
+	<div class=" text-center">
+		<FORM METHOD="POST" ACTION="cgi-java-POST.sh">
+			<div class="container divtainer text-center container1"
+				style="background-color: white">
+
+					<div style="margin: 0 auto">
+						<div class="form-group">
+
+							<button class="btn btn-primary add_form_field">
+								Add New Field &nbsp; <span
+									style="font-size: 16px; font-weight: bold;">+ </span>
+							</button>
+						</div>
+
+						<label class= "sum1l" id ="sum1l"> sum </label>
+						<input type= "checkbox" id="sum1" name="sum1" value="sum">
+							<label class= "not1l" id ="not1l"> not </label>
+							<input type= "checkbox" id="not1" name="not1" value="not">
+
+							<select  class="regiao1" id="regiao1" name="regiao1"  style="margin: 2 auto;max-width: 200px">
+								<option value = "all"> all </option>
+								<option value = "qry"> ? </option>
+								$regiao
+							</select>
+							<select   id="mysubquery1" name="mysubquery1" style="margin: 2 auto;max-width: 200px">
+								<option value = "all"> all </option>
+								$subquery
+							</select>
+							<select   id="operator1" name="operator1" style="margin: 2 auto;max-width: 200px">
+								<option value="all">none</option>
+								<option value="dif">&#8800;</option>
+								<option value="eq">&#61;</option>
+								<option value="lt">&#60;</option>
+								<option value="gt">&#62;</option>
+								<option value="lte">&#8804;</option>
+								<option value="gte">&#8925;</option>
+							</select>
+							<input   type="text"
+								id="query1" name="1query1" value=""style="margin: 0 auto;max-width: 200px">
+
+								<script>
+								$("#regiao1").change(function() {
+									var value = $("#regiao1 option:selected").val();
+
+									if(this.value == "all" && $("#mysubquery1 option:selected").val() != "all"){
+										 $('#sum1l').show().find('input').prop('disabled', false);
+										 $('#sum1').show().find('input').prop('disabled', false);
+									}else{
+										$('#sum1l').hide().find('input').prop('disabled', true);
+										$('#sum1').hide().find('input').prop('disabled', true);
+
+
+									}
+
+								}).change();
+								$("#mysubquery1").change(function() {
+									var value = $("#mysubquery1 option:selected").val();
+
+									if(this.value != "all" && $("#regiao1 option:selected").val() == "all"){
+										 $('#sum1l').show().find('input').prop('disabled', false);
+										 $('#sum1').show().find('input').prop('disabled', false);
+									}else{
+										$('#sum1l').hide().find('input').prop('disabled', true);
+										$('#sum1').hide().find('input').prop('disabled', true);
+									}
+
+								}).change();
+
+								$("#operator1").change(function() {
+									var value = $("#operator1 option:selected").val();
+
+									if(this.value == "all"){
+										 $('#query1').hide().find('input').prop('disabled', true);
+									}else{
+										$('#query1').show().find('input').prop('disabled', false);
+
+
+									}
+
+								}).change();
+
+</script>
+
+
+</div>
+			</div>
+			<div class="container divtainer text-center" style="background-color: white">
+
+					<INPUT class="btn btn-primary" TYPE="submit" VALUE="Submit">
+			</div>
+
+
+		</FORM>
+
+</body>
+</html>

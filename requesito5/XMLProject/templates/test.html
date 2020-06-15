@@ -1,0 +1,181 @@
+<html>
+<head>
+<title>Rq6</title>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+<style type="text/css">
+.divtainer {
+	padding: 20px;
+	box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+	border: 1px solid #dee2e6 !important;
+	margin-bottom: 20px;
+}
+</style>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+</head>
+<body style="background-color: #e9ecef">
+	<div class=" text-center">
+		<FORM METHOD="POST" ACTION="cgi-java-POST.sh">
+			<div class="container divtainer text-center container1"	style="background-color: white">
+
+						<div style="margin: 0 auto">
+
+
+								<label class= "sum1l" id ="sum1l"> sum </label>
+								<input type= "checkbox" id="sum1" name="sum1" value="sum">
+
+								<select  class="regiao1" id="regiao1" name="regiao1"  style="margin: 2 auto;max-width: 200px">
+									<option value = "all"> all </option>
+									<option value = "qry"> ? </option>
+									$regiao
+								</select>
+
+								<label class= "not1l" id ="not1l"> not </label>
+								<input type= "checkbox" id="not1" name="not1" value="not">
+
+
+								<select   id="mysubquery1" name="mysubquery1" style="margin: 2 auto;max-width: 200px">
+
+									$subquery
+								</select>
+								<select   id="operator1" name="operator1" style="margin: 2 auto;max-width: 200px">
+									<option value="all">none</option>
+									<option value="dif">&#8800;</option>
+									<option value="eq">&#61;</option>
+									<option value="lt">&#60;</option>
+									<option value="gt">&#62;</option>
+									<option value="lte">&#8804;</option>
+									<option value="gte">&#8925;</option>
+								</select>
+
+
+
+								<input   type="text" id="query1" name="query1" value=""style="margin: 0 auto;max-width: 200px">
+
+								<select class="sq2" id="logicalOperator1" style="margin: 2 auto;max-width: 200px" name="logicalOperator1">
+									<option value="non">done</option>
+									<option value="and">and</option>
+									<option value="or">or</option>
+								</select>
+								<div id = "sq2">
+									<label class="sq2" id="not2l">not</label>
+									<input class="sq2" type="checkbox" id="not2"  style="margin: 2 auto;max-width: 200px"name="not2" value="not">
+
+
+
+									<select class="sq2" id="mysubquery2" style="margin: 2 auto;max-width: 200px" name="mysubquery2">
+									 $subquery
+									</select>
+									<select class="sq2" id="operator2" style="margin: 2 auto;max-width: 200px" name="operator2">
+										<option value="all">none</option>
+										<option value="dif">&#8800;</option>
+										<option value="eq">&#61;</option>
+										<option value="lt">&#60;</option>
+										<option value="gt">&#62;</option>
+										<option value="lte"> &#8804; </option>
+										<option value="gte">&#8925;</option>
+									</select>
+									<input class="sq2" type="text" id="query2" name="query2" style="margin: 2 auto;max-width: 200px"  value="">
+								</div>
+
+								<script>
+									$("#regiao1").change(function() {
+										var value = $("#regiao1 option:selected").val();
+
+										if(this.value == "all" && $("#mysubquery1 option:selected").val() != "all"){
+											 $('#sum1l').show().find('input').prop('disabled', false);
+											 $('#sum1').show().find('input').prop('disabled', false);
+										}else{
+											$('#sum1l').hide().find('input').prop('disabled', true);
+											$('#sum1').hide().find('input').prop('disabled', true);
+
+
+										}
+										if(this.value =="qry"){
+											logicalOperator1
+												$('#logicalOperator1').show().find('input').prop('disabled', false);
+										}else{
+											$('#logicalOperator1').hide().find('input').prop('disabled', true);
+												$('#logicalOperator1').val('non');
+												$('#logicalOperator1').change();
+										}
+
+									}).change();
+									$("#mysubquery1").change(function() {
+										var value = $("#mysubquery1 option:selected").val();
+
+										if(this.value != "all" && $("#regiao1 option:selected").val() == "all"){
+											 $('#sum1l').show().find('input').prop('disabled', false);
+											 $('#sum1').show().find('input').prop('disabled', false);
+										}else{
+											$('#sum1l').hide().find('input').prop('disabled', true);
+											$('#sum1').hide().find('input').prop('disabled', true);
+										}
+
+									}).change();
+
+									$("#operator1").change(function() {
+										var value = $("#operator1 option:selected").val();
+
+										if(this.value == "all"){
+											 $('#query1').hide().find('input').prop('disabled', true);
+										}else{
+											$('#query1').show().find('input').prop('disabled', false);
+
+
+										}
+									}).change();
+
+
+										$("#operator2").change(function() {
+											var value = $("#operator2 option:selected").val();
+
+											if(this.value == "all"){
+												 $('#query2').hide().find('input').prop('disabled', true);
+											}else{
+												$('#query2').show().find('input').prop('disabled', false);
+
+
+											}
+									}).change();
+
+									$("#logicalOperator1").change(function() {
+										var value = $("#logicalOperator1").val();
+
+										if(this.value == "non"){
+											$("#sq2 :input").hide().find('input').prop("disabled", true);
+											$('#not2l').hide().find('input').prop('disabled', true);
+										}else{
+												$("#sq2 :input").show().find('input').prop("disabled", false);
+												 $('#not2l').show().find('input').prop('disabled', false);
+												 $("#operator2").change();
+										}
+									}).change();
+								</script>
+
+
+						</div>
+			</div>
+			<div class="container divtainer text-center" style="background-color: white">
+
+					<INPUT class="btn btn-primary" TYPE="submit" VALUE="Submit">
+			</div>
+			<div class="container divtainer text-center" style="background-color: white">
+				<h4
+					id="query1" name="query1" value=""style="margin: 0 auto;max-width: 200px">
+					Result:
+				</h4>
+				<div class="container divtainer text-center" style="background-color: grey">
+					<p style="color:white;">
+						$Result
+					</p>
+				</div>
+
+			</div>
+
+		</FORM>
+	</div>
+</body>
+</html>

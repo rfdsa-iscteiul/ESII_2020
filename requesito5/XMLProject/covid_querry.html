@@ -1,0 +1,137 @@
+<html>
+<head>
+<title>Rq6</title>
+<style>
+.container1 input[type=text] {
+padding:5px 0px;
+margin:5px 5px 5px 0px;
+}
+
+
+.add_form_field
+{
+    background-color: #1c97f3;
+    border: none;
+    color: white;
+    padding: 8px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+	border:1px solid #186dad;
+
+}
+
+input{
+    border: 1px solid #1c97f3;
+    width: 260px;
+    height: 40px;
+	margin-bottom:14px;
+}
+
+.delete{
+    background-color: #fd1200;
+    border: none;
+    color: white;
+    padding: 5px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    cursor: pointer;
+
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+    var max_fields      = 10;
+    var wrapper         = $(".container1");
+    var add_button      = $(".add_form_field");
+    var x = 1;
+    var queryEntry
+
+    $(add_button).click(function(e){
+        e.preventDefault();
+        if(x < max_fields){
+            x++;
+              queryEntry   =
+              '<div>'+
+                '<select id="operator'+x+'" name="logicalOperator'+x+'">'+
+                  '<option value="and">and</option>'+
+                  '<option value="or">or</option>'+
+
+                '</select>'+
+                '<label>not</label>'+
+              '<input type="checkbox" id="not'+x+'" name="not'+x+'" value="not">'+
+
+                '<input type="text" id="regiao'+x+'" name="regiao'+x+'" value="nome regiao">'+
+                '<select id="regiao'+x+'" name="regiao'+x+'">'+
+            		'<option value="Alentejo">Alentejo</option>'+'<option value="Algarve">Algarve</option>'+'<option value="Centro">Centro</option>'+'<option value="Lisboa">Lisboa</option>'+'<option value="Norte">Norte</option>'+
+          		'</select>'+
+                '<select id="searching" name="mysubquery'+x+'">'+
+                  	'<option value="Infecoes">Infecoes</option>'+'<option value="Internamentos">Internamentos</option>'+'<option value="Testes">Testes</option>'+
+                '</select>'+
+                '<select id="searching" name="operator'+x+'">'+
+                  '<option value="all">all</option>'+
+                  '<option value="dif">&#8800;</option>'+
+                  '<option value="eq">&#61;</option>'+
+                  '<option value="lt">&#60;</option>'+
+                  '<option value="gt">&#62;</option>'+
+                  '<option value="lte"> &#8804; </option>'+
+                  '<option value="gte">&#8925;</option>'+
+
+                '</select>'+
+                '<input type="text" id="query1" name="query'+x+'" value="">'+
+                '<a href="#" class="delete">Delete</a>'+
+              '</div>'
+            $(wrapper).append(queryEntry); //add input box
+
+        }
+		else
+		{
+		alert('You Reached the limits')
+		}
+    });
+
+    $(wrapper).on("click",".delete", function(e){
+        e.preventDefault(); $(this).parent('div').remove(); x--;
+    })
+});
+</script>
+</head>
+<body>
+<FORM METHOD="POST" ACTION="cgi-bin/cgi-java-POST.sh">
+<div class="container1">
+    <button class="add_form_field">Add New Field &nbsp; <span style="font-size:16px; font-weight:bold;">+ </span></button>
+
+    <div>
+      <label>not</label>
+      <input type="checkbox" id="not1" name="not1" value="not">
+
+		<select id="regiao1" name="regiao1">
+        	'<option value="Alentejo">Alentejo</option>'+'<option value="Algarve">Algarve</option>'+'<option value="Centro">Centro</option>'+'<option value="Lisboa">Lisboa</option>'+'<option value="Norte">Norte</option>'+
+      </select>
+      <select id="searching" name="mysubquery1">
+        	'<option value="Infecoes">Infecoes</option>'+'<option value="Internamentos">Internamentos</option>'+'<option value="Testes">Testes</option>'+
+      </select>
+
+      <select id="searching" name="operator1">
+        <option value="all">all</option>
+        <option value="dif">&#8800;</option>
+        <option value="eq">&#61;</option>
+        <option value="lt">&#60;</option>
+        <option value="gt">&#62;</option>
+        <option value="lte"> &#8804; </option>
+        <option value="gte">&#8925;</option>
+      </select>
+
+      <input type="text" id="query1" name="query1" value="">
+    </div>
+</div>
+<INPUT TYPE="submit" VALUE="Submit">
+</body>
+</html>
