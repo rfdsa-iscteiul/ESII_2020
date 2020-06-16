@@ -13,6 +13,10 @@ import Utils.AnalyticsFile;
 import Utils.Email;
 
 
+/**
+ * @author anamartacontente
+ *
+ */
 public class Page {
 	
 	  protected  WebDriver driver;
@@ -22,7 +26,13 @@ public class Page {
 	  protected AnalyticsFile jsonFile;
 
 	
-	  public Page( String url, String pageTitle, String JsonKeyName, AnalyticsFile jsonFile){
+	  /**
+	 * @param url of the page being tested
+	 * @param pageTitle the title of the page being tested
+	 * @param JsonKeyName the the key that represents the page on the json file that has the analytics
+	 * @param jsonFile object that deals with analytics
+	 */
+	public Page( String url, String pageTitle, String JsonKeyName, AnalyticsFile jsonFile){
 
 		
 	    this.url = url;
@@ -32,12 +42,19 @@ public class Page {
 	    
 	    
 	  }
-	  public void setUp() throws Exception {
+	/**
+	 * Sets Up driver for testing 
+	 */  
+	public void setUp() throws Exception {
 		  System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
 		  driver = new ChromeDriver();
 		  driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		  
 	  }
+	
+	/**
+	 * Tests If page is available  it will send an email otherwise
+	 */
 	  
 	  public void testPage() {
 		  
@@ -59,6 +76,11 @@ public class Page {
 			  
 		  
 	  }
+	  
+	  
+	  /**
+		 * Sets Up the test and tests it
+		 */
 	  public void test() {
 		  try {
 			setUp();
@@ -77,7 +99,10 @@ public class Page {
 	  
 	  
 	  
-	  public void waitForLoad() {
+	 /**
+	 * Waits for the page to load
+	 */
+	public void waitForLoad() {
 	        ExpectedCondition<Boolean> pageLoadCondition = new
 	                ExpectedCondition<Boolean>() {
 	                    public Boolean apply(WebDriver driver) {

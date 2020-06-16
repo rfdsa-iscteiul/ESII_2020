@@ -23,7 +23,7 @@ public class Email {
 		try {
 			Properties p = new Properties();
 			p.load(new FileInputStream("src/main/resources/config.ini"));
-			to = p.getProperty("email");
+			to = p.getProperty("emailto");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

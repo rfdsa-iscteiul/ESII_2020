@@ -1,10 +1,12 @@
 package pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
 import Utils.AnalyticsFile;
 
+/**
+ * @author anamartacontente
+ *
+ */
 public class CovidSpread extends Page{
 	private final static String  URL =  "https://fenix.iscte-iul.pt/loginPage.jsp";
 	private final static String PAGE_TITLE = "Login - ISCTE-IUL - ISCTE - Instituto Universitário de Lisboa";
@@ -13,7 +15,10 @@ public class CovidSpread extends Page{
 
 
 	  
-	  public CovidSpread(AnalyticsFile jsonFile) {
+	  /**
+	 * @param jsonFile object that deals with analytics
+	 */
+	public CovidSpread(AnalyticsFile jsonFile) {
 			super(URL, PAGE_TITLE,JSONKEYNAME, jsonFile);
 		}
 	

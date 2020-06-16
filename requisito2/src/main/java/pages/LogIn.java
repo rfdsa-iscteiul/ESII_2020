@@ -2,15 +2,17 @@ package pages;
 
 import java.io.FileInputStream;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+
 
 import Utils.AnalyticsFile;
 import Utils.Email;
 
+/**
+ * @author anamartacontente
+ *
+ */
 public class LogIn extends Page {
 	
 
@@ -28,11 +30,17 @@ public class LogIn extends Page {
 
 
 	  
-	  public LogIn( AnalyticsFile jsonFile) {
+	  /**
+	 * @param jsonFile object that deals with analytics
+	 */
+	public LogIn( AnalyticsFile jsonFile) {
 		super( URL, PAGE_TITLE,JSONKEYNAME, jsonFile);
 	}
 	
-	  @Override
+	  /**
+	 *Tests If page is available in case it is it will call testLoginValidUser it will send an email otherwise
+	 */
+	@Override
 	  public void testPage() {
 			 
 		  driver.get(url);
@@ -50,9 +58,13 @@ public class LogIn extends Page {
 		  
 	  }
 	
+	/**
+	 * Tests if it is possible to use the function to contact it will send an email otherwise
+	 */
 	public void testloginValidUser() {
 		    
 			driver.findElement(usernameBy).sendKeys(username);
+			System.out.println(driver.findElement(usernameBy));
 		    driver.findElement(passwordBy).sendKeys(password);
 		    driver.findElement(loginBy).click();
 		    waitForLoad();
@@ -73,16 +85,23 @@ public class LogIn extends Page {
 	    
 	 }
 	
+	/**
+	 * Sets Up driver for testing and gets variables for testing from config.ini file
+	 */
 	@Override
 	public void setUp() throws Exception {
 		 super.setUp();
 		 Properties p = new Properties();
 		 p.load(new FileInputStream("src/main/resources/config.ini"));
-		 username=p.getProperty("username");
+		 username=p.getProperty("email");
 		 password=p.getProperty("password");
 
 		  
 	  }
+	
+	/**
+	 * Sets Up the test and tests it
+	 */
 	@Override
 	public void test() {
 		try {

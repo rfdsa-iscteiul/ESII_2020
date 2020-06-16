@@ -1,5 +1,4 @@
 package Utils;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
  
@@ -9,10 +8,15 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * @author anamartacontente
+ *
+ */
 public class AnalyticsFile {
 	private final static String PATH_TO_FILE = "src/main/resources/Analytics.json";
 	private JSONObject fileContent ;
 	private DateTimeFormatter formatter;
+	
 	
 	
 	
@@ -30,12 +34,19 @@ public class AnalyticsFile {
 		
 		
 	}
+	/**
+	 * @return JSONObject that represents the analytics of each page
+	 */
 	public JSONObject getJson() {
 		return fileContent;
 	}
 	
 	
 	
+	/** Updates json object with the analytics of a page
+	 * @param isUp boolean that tells us if the up is working
+	 * @param keyname key that represents page on the json array
+	 */
 	@SuppressWarnings("unchecked")
 	public void alterJson(boolean isUp, String keyname ) {
 		System.out.println(fileContent.toJSONString());
@@ -63,6 +74,9 @@ public class AnalyticsFile {
 	}
 	
 	
+/**
+ * Writes file with the updated Json object representing the analytics of each page
+ */
 public void updateFile() {
 		
 		try {
@@ -78,72 +92,7 @@ public void updateFile() {
 		}
 	}
 
-//@SuppressWarnings("unchecked")
-//public void alterAboutUs(boolean isUp) {
-//	System.out.println(fileContent.toJSONString());
-//	JSONObject aboutUs = (JSONObject) fileContent.get("AboutUs");
-//
-//	if( isUp ) {
-//		aboutUs.put("Uptime",   Integer.parseInt( aboutUs.get("Uptime").toString() ) +  2);
-//		aboutUs.put("LastUp",   LocalDateTime.now().format(formatter));
-//
-//	}else {
-//		aboutUs.put("Uptime",   Integer.parseInt( aboutUs.get("Uptime").toString() ) +  2);
-//		aboutUs.put("LastUp",   LocalDateTime.now().format(formatter));
-//
-//		
-//	}
-//	fileContent.put("AboutUs", aboutUs);
-//	System.out.println(aboutUs);
-//
-//	
-//	
-//}
-//	public void alterContactUs(boolean isUp) {
-//			
-//			
-//	}
-//	
-//	public void alterCovidEvolution(boolean isUp) {
-//		
-//		
-//	}
-//	public void alterCovidQueries(boolean isUp) {
-//		
-//		
-//	}
-//	public void alterCovidScientificDisvoveries(boolean isUp) {
-//		
-//		
-//	}
-//	public void alterCovidSpread(boolean isUp) {
-//		
-//		
-//	}
-//	public void alterCovidWiki(boolean isUp) {
-//		
-//		
-//	}
-//	public void alterFAQ(boolean isUp) {
-//		
-//		
-//	}
-//	public void alterHome(boolean isUp) {
-//		
-//		
-//	}
-//	public void alterJoinUs(boolean isUp) {
-//		
-//		
-//	}
-//	public void alterLogIn(boolean isUp) {
-//		
-//		
-//	}
-//	public void WebSiteAnalytics(boolean isUp) {
-//		
-//		
-//	}
+
 	
 	
 	

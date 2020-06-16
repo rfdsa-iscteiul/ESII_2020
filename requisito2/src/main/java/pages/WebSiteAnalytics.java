@@ -1,6 +1,5 @@
 package pages;
 
-import org.openqa.selenium.WebDriver;
 
 import Utils.AnalyticsFile;
 
@@ -13,7 +12,10 @@ public class WebSiteAnalytics extends Page{
 
 
 	  
-	  public WebSiteAnalytics(AnalyticsFile jsonFile) {
+	  /**
+	 * @param jsonFile object that deals with analytics
+	 */
+	public WebSiteAnalytics(AnalyticsFile jsonFile) {
 			super( URL, PAGE_TITLE,JSONKEYNAME, jsonFile);
 		
 	}

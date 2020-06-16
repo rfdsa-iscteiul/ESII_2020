@@ -3,6 +3,7 @@ package main;
 import Utils.AnalyticsFile;
 import Utils.WriteHtmlFile;
 import pages.AboutUs;
+import pages.ContactUs;
 import pages.CovidEvolution;
 import pages.CovidQueries;
 import pages.CovidScientificDiscoveries;
@@ -20,6 +21,7 @@ public class Tests {
 		
 		new AboutUs(a).test();
 		new LogIn(a).test();
+		new ContactUs(a).test();
 //    	new CovidEvolution( a).test();
 //    	new CovidQueries( a).test();
 //    	new CovidScientificDiscoveries( a).test();
